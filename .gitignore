@@ -9,5 +9,8 @@ Local.testsettings
 bin/
 obj/
 TestResults/
+packages/
 *.testsettings
 *.pdb
+*crunchsolution*
+*crunchproject*
