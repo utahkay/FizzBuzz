@@ -1,5 +1,4 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace FizzBuzz
 {
@@ -11,10 +10,7 @@ namespace FizzBuzz
         [SetUp]
         public void Setup()
         {
-            game = new DrinkingGame();
-            game.TheRules += game.Substitute(3, "Fizz");
-            game.TheRules += game.Substitute(5, "Buzz");
-            game.TheRules += game.NoChange;
+            game = new FizzBuzzGame();
         }
 
         [TestCase(2, "2")]
@@ -25,37 +21,13 @@ namespace FizzBuzz
         {
             Assert.That(game.Translate(input), Is.EqualTo(expected));
         }
-    }
 
-    public class DrinkingGame
-    {
-        public delegate string Rule(int input);
-
-        public event Func<int, string> TheRules;
-
-        private static string result;
-
-        public DrinkingGame()
+        [Test]
+        public void TestCallSequentially()
         {
-            result = "";
-        }
-
-        public Func<int, string, Func<int, string>> Substitute = (divisor, word) => input =>
-        {
-            if (input % divisor == 0) result += word;
-            return result;
-        };
-
-        public Func<int, string> NoChange = x =>
-        {
-            if (result == "") result += x.ToString();
-            return result;
-        };
-
-        public string Translate(int input)
-        {
-            return TheRules(input);
+            Assert.That(game.Translate(1), Is.EqualTo("1"));
+            Assert.That(game.Translate(2), Is.EqualTo("2"));
+            Assert.That(game.Translate(3), Is.EqualTo("Fizz"));
         }
     }
-
 }
