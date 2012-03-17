@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 
 namespace FizzBuzz
@@ -10,10 +10,10 @@ namespace FizzBuzz
         [Test]
         public void Enumerate()
         {
-            foreach (string output in PlayGame())
-            {
-                Console.WriteLine(output);
-            };
+            var output = PlayGame().ToList();
+            Assert.That(output.Count(s => s == "Fizz"), Is.EqualTo(5));
+            Assert.That(output.Count(s => s == "Buzz"), Is.EqualTo(2));
+            Assert.That(output.Count(s => s == "FizzBuzz"), Is.EqualTo(1));
         }
 
         private static IEnumerable<string> PlayGame()
